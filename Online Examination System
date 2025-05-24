@@ -1,0 +1,149 @@
+import java.util.*;
+
+class User {
+    String name;
+    String email;
+    String password;
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public boolean login(String enteredEmail, String enteredPassword) {
+        return this.email.equals(enteredEmail) && this.password.equals(enteredPassword);
+    }
+
+    public void updateProfile(String newName, String newEmail) {
+        this.name = newName;
+        this.email = newEmail;
+        System.out.println("Profile updated successfully.");
+    }
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+        System.out.println("Password changed successfully.");
+    }
+}
+
+class OnlineExamination {
+    static Scanner sc = new Scanner(System.in);
+    static User user;
+
+    public static void runExamSystem() {
+        // creating dummy user
+        user = new User("John", "john@example.com", "1234");
+
+        System.out.println("=== Welcome to Online Examination System ===");
+
+        // login part
+        System.out.print("Enter Email: ");
+        String enteredEmail = sc.nextLine();
+        System.out.print("Enter Password: ");
+        String enteredPassword = sc.nextLine();
+
+        if (user.login(enteredEmail, enteredPassword)) {
+            System.out.println("Login Successful!");
+
+            int choice;
+            do {
+                System.out.println("\n1. Update Profile");
+                System.out.println("2. Change Password");
+                System.out.println("3. Start Exam");
+                System.out.println("4. Logout");
+                System.out.print("Enter choice: ");
+                choice = sc.nextInt();
+                sc.nextLine(); // to consume newline
+
+                switch (choice) {
+                    case 1 -> {
+                        System.out.print("Enter new name: ");
+                        String newName = sc.nextLine();
+                        System.out.print("Enter new email: ");
+                        String newEmail = sc.nextLine();
+                        user.updateProfile(newName, newEmail);
+                    }
+
+                    case 2 -> {
+                        System.out.print("Enter new password: ");
+                        String newPassword = sc.nextLine();
+                        user.changePassword(newPassword);
+                    }
+
+                    case 3 -> {
+                        startExam(); // call the exam function
+                    }
+
+                    case 4 -> {
+                        System.out.println("Logged out successfully.");
+                    }
+
+                    default -> {
+                        System.out.println("Invalid choice. Try again.");
+                    }
+                }
+
+            } while (choice != 4);
+        } else {
+            System.out.println("Invalid Login. Please try again.");
+        }
+    }
+
+    public static void startExam() {
+        System.out.println("\n--- Exam Started ---");
+        System.out.println("You have 30 seconds to complete the exam.");
+        Timer timer = new Timer();
+
+        TimerTask autoSubmit = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("\nTime's up! Auto-submitting...");
+                System.out.println("Exam submitted successfully.");
+                timer.cancel();
+            }
+        };
+        timer.schedule(autoSubmit, 30000); // 30 sec
+
+        int score = 0;
+        int ans;
+
+        System.out.println("\nQ1. What is the full form of CPU?");
+        System.out.println("1) Central Processing Unit");
+        System.out.println("2) Central Performance Unit");
+        System.out.println("3) Control Power Unit");
+        System.out.println("4) Central Power Unit");
+        System.out.print("Your answer: ");
+        ans = sc.nextInt();
+        if (ans == 1) score++;
+
+        System.out.println("\nQ2. Which language is used for Android App development?");
+        System.out.println("1) Python");
+        System.out.println("2) Java");
+        System.out.println("3) Swift");
+        System.out.println("4) C++");
+        System.out.print("Your answer: ");
+        ans = sc.nextInt();
+        if (ans == 2) score++;
+
+        System.out.println("\nQ3. Who invented Java?");
+        System.out.println("1) Dennis Ritchie");
+        System.out.println("2) James Gosling");
+        System.out.println("3) Guido van Rossum");
+        System.out.println("4) Bjarne Stroustrup");
+        System.out.print("Your answer: ");
+        ans = sc.nextInt();
+        if (ans == 2) score++;
+
+        timer.cancel();
+        System.out.println("\nExam Submitted Successfully!");
+        System.out.println("Your Score: " + score + " out of 3");
+    }
+}
+
+// Main class to start the program
+public class Main {
+    public static void main(String[] args) {
+        OnlineExamination.runExamSystem();
+    }
+}
