@@ -79,4 +79,4 @@ The Online Examination System provides a strong foundation for understanding the
 ---
 
 ##OUTPUT:
-![Image](https://github.com/user-attachments/assets/028a67e9-7dea-45d8-afdf-12a373f598f3)
+![Image](https://github.com/user-attachments/assets/daec6197-5100-412f-90c8-7ec7eef9f766)
